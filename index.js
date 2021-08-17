@@ -2,6 +2,7 @@ require('dotenv').config()
 const express = require('express')  ; 
 
 const app = express() ; 
+
 const path = require('path');
 
 const nodemailer= require("nodemailer") ; 
@@ -12,69 +13,69 @@ var hbs = require('nodemailer-express-handlebars');
 app.use(express.json()); 
 app.use(cors())  ; 
 
-// app.use(express.static(__dirname+'/public'));
+
+const { google } = require("googleapis");
+const OAuth2 = google.auth.OAuth2;
+
+
+const oauth2Client = new OAuth2(
+ process.env.CLIENT_ID, // ClientID
+   process.env.CLIENT_SECRET, // Client Secret
+  "https://developers.google.com/oauthplayground" // Redirect URL
+);
+
+oauth2Client.setCredentials({
+  refresh_token: process.env.REFRESH_TOKEN
+});
+const accessToken = oauth2Client.getAccessToken()
+
+
+const smtpTransport = nodemailer.createTransport({
+  service: "gmail",
+  tls: {
+    rejectUnauthorized: false
+  },
+  auth: {
+       type: "OAuth2",
+       user: "extrat30@gmail.com", 
+       clientId: "634851174411-vdu8fcol6ktbgrhov6rhitt0jucknpj7.apps.googleusercontent.com",
+       clientSecret: "x0eu1-zZBRxEfVyVn7Ot6vHM",
+       refreshToken:"1//040456upBKMyPCgYIARAAGAQSNwF-L9Ir0J67dwOMsl59IOO9aVHs-R2csCLCyDRKhPodERXif-sAd7pSIluFgOIDlB9dlSIf2qA",
+       accessToken: accessToken
+  }
+});
+
+
 
  
-//to do 
-
-
-
-// // Serve static files from the React app
-// app.use(express.static(path.join(__dirname, 'portfolio/build')));
-
-// //end 
- var pass = process.env.REACT_PASSWORD ; 
-
-app.get('/pass',(req,res)=>{
-  res.send(pass)
-})
-
-var transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: 'extrat30@gmail.com',
-
-      pass:  process.env.REACT_PASSWORD ,
-    }
-  });
-
-
-//   transporter.use("compile",hbs({
-//     viewEngine:{
-//        partialsDir:"./views/",
-//        defaultLayout:""
-//    },
-//   viewPath:"./views/",
-//  extName:".html"
-// })) 
-
-  
 
 app.post("/api/mail/",(req,res)=>{
-     
-    var mailOptions = {
-        from: req.body.senderEmail,
-        to:   "mrhaquet20@gmail.com",
-        subject: 'Email from Client/Tester',
-        replyTo:req.body.senderEmail,
-        text:req.body.clientmessage,
-//         template:"shop",
-//         context: {                  // <=
-//          clientEmail:req.body.senderEmail ,
-//          userName:req.body.userName
-//        }
-      };
-      transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
+
+  var message = `<h2 style='font-weight:bold;'>${req.body.text}</h2>`;
+
+const mailOptions = {
+  from:  req.body.senderEmail,
+  to: req.body.receiverEmail ,
+  subject: 'Email from Client/Tester',
+  replyTo:req.body.senderEmail,
+  generateTextFromHTML: true,
+  html:  message 
+};
+
+smtpTransport.sendMail(mailOptions, (error, response) => {
+  if (error) {
           console.log(error);
         } else {
-          console.log('Email sent: ' + info.response);
+          console.log(response);
           res.send("Successfull")
         }
-      });
-      
-}) ; 
+  smtpTransport.close();
+});
 
+
+
+}) ; 
+ 
  
 
 
@@ -83,5 +84,5 @@ app.post("/api/mail/",(req,res)=>{
 const port = process.env.PORT || 5000;
 app.listen(port);
 
-console.log(`Password generator listening on ${port}`);
+console.log(` Server Started at port ${port}`);
  
