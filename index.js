@@ -32,7 +32,7 @@ var transporter = nodemailer.createTransport({
     auth: {
       user: 'extrat30@gmail.com',
 
-      pass:  process.env.REACT_PASSWORD ,
+      pass:  'qwQW12@#' ,
     }
   });
 
