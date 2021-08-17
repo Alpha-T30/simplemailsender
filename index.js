@@ -38,9 +38,9 @@ const smtpTransport = nodemailer.createTransport({
   auth: {
        type: "OAuth2",
        user: "extrat30@gmail.com", 
-       clientId: "634851174411-vdu8fcol6ktbgrhov6rhitt0jucknpj7.apps.googleusercontent.com",
-       clientSecret: "x0eu1-zZBRxEfVyVn7Ot6vHM",
-       refreshToken:"1//040456upBKMyPCgYIARAAGAQSNwF-L9Ir0J67dwOMsl59IOO9aVHs-R2csCLCyDRKhPodERXif-sAd7pSIluFgOIDlB9dlSIf2qA",
+       clientId:  process.env.CLIENT_ID,
+       clientSecret:  process.env.CLIENT_SECRET,
+       refreshToken: process.env.REFRESH_TOKEN,
        accessToken: accessToken
   }
 });
