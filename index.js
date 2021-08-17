@@ -19,10 +19,10 @@ app.use(cors())  ;
 
 
 
-// Serve static files from the React app
-app.use(express.static(path.join(__dirname, 'portfolio/build')));
+// // Serve static files from the React app
+// app.use(express.static(path.join(__dirname, 'portfolio/build')));
 
-//end 
+// //end 
  
 
 
@@ -73,13 +73,7 @@ app.post("/api/mail/",(req,res)=>{
       
 }) ; 
 
-//todo 
-// The "catchall" handler: for any request that doesn't
-// match one above, send back React's index.html file.
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname+'/portfolio/build/index.html'));
-});
-
+ 
 
 
 
