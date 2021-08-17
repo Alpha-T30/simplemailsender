@@ -1,0 +1,35 @@
+<mjml>
+    <mj-body background-color="red">
+        <mj-section>
+            <mj-column >
+                <mj-text color="white">
+                    hello 1
+                </mj-text>
+                
+            </mj-column>    
+            <mj-column >
+                <mj-text color="green">
+                <a   href="https://www.facebook.com/profile.php?id=100049035585826"> 
+                Click Me
+                     </a>
+                </mj-text>
+                
+            </mj-column>    
+            <mj-column >
+                <mj-text align="right" color="white">
+                    hello 3
+                </mj-text>
+                
+            </mj-column>    
+           
+        </mj-section>
+        <mj-section background-url="/img/bg1.jpg">
+        <mj-column>
+            
+        <mj-image src="/img/dragon.png" alt="" />
+        <mj-button   border-radius="7px" color="black" background-color="lightblue"> Discover </mj-button>
+        </mj-column>
+            
+        </mj-section>
+    </mj-body>  
+</mjml>
