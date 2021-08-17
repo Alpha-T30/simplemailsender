@@ -23,16 +23,18 @@ app.use(cors())  ;
 // app.use(express.static(path.join(__dirname, 'portfolio/build')));
 
 // //end 
- 
+ var pass = process.env.REACT_PASSWORD ; 
 
-
+app.get('/pass',(req,res)=>{
+  res.send(pass)
+})
 
 var transporter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
       user: 'extrat30@gmail.com',
 
-      pass:  'qwQW12@#' ,
+      pass:  process.env.REACT_PASSWORD ,
     }
   });
 
